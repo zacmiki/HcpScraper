@@ -4,8 +4,8 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
 # Set up Streamlit interface
-st.title("Trieste Handicap Scraper")
-st.write("Please enter your credentials below:")
+st.title("Gesgolf Handicap Scraper")
+st.write("Please enter your **GesGolf** credentials below:")
 
 # Get user input for NrTessera and Password
 nr_tessera = st.text_input("NrTessera", "")
