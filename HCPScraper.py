@@ -42,6 +42,7 @@ if st.button("Start Scraping"):
                 if i > 1:  # Navigate for pages 2-10
                     page.locator("#cpCorpo_gv_Handicap").get_by_role("cell", name=str(i), exact=True).click()
                     page.wait_for_selector('#cpCorpo_gv_Handicap')
+                    page.wait_for_selector('#cpCorpo_gv_HandicapNZ')
                     
                 html2 = page.inner_html('#cpCorpo_gv_Handicap')
                 table = BeautifulSoup(html2, "html.parser")
@@ -60,6 +61,7 @@ if st.button("Start Scraping"):
                 if i > 1:  # Navigate for pages 2-7
                     page.locator("#cpCorpo_gv_HandicapNZ").get_by_role("cell", name=str(i), exact=True).click()
                     page.wait_for_selector('#cpCorpo_gv_HandicapNZ')
+                    page.wait_for_selector('#cpCorpo_gv_Handicap')
                     
                 html3 = page.inner_html('#cpCorpo_gv_HandicapNZ')
                 table = BeautifulSoup(html3, "html.parser")
