@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import subprocess
 
-subprocess.run(["playwright", "install"], check=True)
-subprocess.run(["playwright", "install-deps"], check=True)
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
