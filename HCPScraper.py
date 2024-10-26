@@ -8,8 +8,8 @@ st.title("Gesgolf Handicap Scraper")
 st.write("Please enter your **GesGolf** credentials below:")
 
 # Get user input for NrTessera and Password
-nr_tessera = st.text_input("NrTessera", "")
-password = st.text_input("Password", "", type="password")
+nr_tessera = st.text_input("Nr Tessera", "")
+password = st.text_input("GesGolf Password", "", type="password")
 
 # Button to start scraping
 if st.button("Start Scraping"):
