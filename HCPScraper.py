@@ -24,7 +24,7 @@ if st.button("Start Scraping"):
         secondurl = "https://www.gesgolf.it/SMSPrenotazioni2014/AreaRiservata/Tesserati/ElencoHandicap.aspx"
 
         with sync_playwright() as p:
-            browser = p.firefox.launch(headless=True, slow_mo=200)
+            browser = p.chromium.launch(headless=True, slow_mo=200)
             page = browser.new_page()
             page.goto(loginurl)
 
