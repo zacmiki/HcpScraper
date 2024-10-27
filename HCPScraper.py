@@ -6,6 +6,9 @@ from scipy.stats import norm
 
 import subprocess
 
+import os
+os.system('playwright install')
+
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
