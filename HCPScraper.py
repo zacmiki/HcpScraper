@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
 import subprocess
 
 from playwright.sync_api import sync_playwright
@@ -76,13 +80,56 @@ if st.button("Start Scraping"):
             # Close the browser
             browser.close()
 
-        # Save DataFrame to CSV and display it
-        df.to_csv("triesteHCP.csv", index=False)
-        st.success("Data scraped successfully!")
-        st.write(df)
-        st.download_button(
-            label="Download CSV",
-            data=df.to_csv(index=False),
-            file_name="triesteHCP.csv",
-            mime="text/csv"
-        )
+    df2 = df.copy()
+
+    # Convert "Handicap" column to float by replacing commas with dots
+    df2["Handicap"] = df2["Handicap"].str.replace(",", ".").astype(float)
+
+    # Step 2: Merge "Cognome" and "Nome" into a single column "FullName"
+    df2["FullName"] = df2["Cognome"] + " " + df2["Nome"]
+
+    # Drop the old "Cognome" and "Nome" columns if no longer needed
+    df2 = df2[["Handicap", "FullName"]]
+
+    # Reverse the column order of df2
+    df2 = df2[["FullName", "Handicap"]]
+
+    # Save DataFrame to CSV and show it on screen
+    df2.to_csv("triesteHCP.csv", index=False)
+    st.success("Data scraped successfully!")
+
+    # Display the DataFrame with full width
+    st.dataframe(df2, use_container_width=True)
+
+    st.download_button(
+        label="Download CSV",
+        data=df2.to_csv(index=False),
+        file_name="triesteHCP.csv",
+        mime="text/csv"
+    )
+
+    # Display the updated DataFrame
+    # Remove rows where Handicap >= 54
+    df2 = df2[df2["Handicap"] < 54]
+
+    # Plot histogram of "Handicap" values
+    plt.figure(figsize=(10, 6)) 
+    count, bins, ignored = plt.hist(df2["Handicap"], bins=10, density=True, alpha=0.6, color='skyblue', edgecolor='black')
+
+    # Fit a normal distribution to the data
+    mean, std_dev = norm.fit(df2["Handicap"])
+
+    # Plot the Gaussian fit
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = norm.pdf(x, mean, std_dev)
+    plt.plot(x, p, 'k', linewidth=2, label=f'Gaussian fit\nMean: {mean:.2f}, Std Dev: {std_dev:.2f}')
+
+    # Add labels and title
+    plt.xlabel('Handicap')
+    plt.ylabel('Density')
+    plt.title('Golf Club Handicap distribution (only players with HCP <54)')
+    plt.legend()
+
+    # Display the plot in Streamlit
+    st.pyplot(plt)
