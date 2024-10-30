@@ -16,8 +16,8 @@ from bs4 import BeautifulSoup
 
 def convert_display_save(df):
     df2 = df.copy()
-    # Convert "Handicap" column to float by replacing commas with dots
-    #df2["Handicap"] = df2["Handicap"].str.replace(",", ".").astype(float)
+    #Convert "Handicap" column to float by replacing commas with dots
+    df2["Handicap"] = df2["Handicap"].str.replace(",", ".").astype(float)
     
     # Step 2: Merge "Cognome" and "Nome" into a single column "FullName"
     #df2["FullName"] = df2["Cognome"] + " " + df2["Nome"]
