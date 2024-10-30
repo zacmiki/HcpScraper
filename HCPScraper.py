@@ -17,16 +17,16 @@ from bs4 import BeautifulSoup
 def convert_display_save(df):
     df2 = df.copy()
     # Convert "Handicap" column to float by replacing commas with dots
-    df2["Handicap"] = df2["Handicap"].str.replace(",", ".").astype(float)
+    #df2["Handicap"] = df2["Handicap"].str.replace(",", ".").astype(float)
     
     # Step 2: Merge "Cognome" and "Nome" into a single column "FullName"
-    df2["FullName"] = df2["Cognome"] + " " + df2["Nome"]
+    #df2["FullName"] = df2["Cognome"] + " " + df2["Nome"]
     
     # Drop the old "Cognome" and "Nome" columns if no longer needed
-    df2 = df2[["Handicap", "FullName"]]
+    #df2 = df2[["Handicap", "FullName"]]
     
     # Reverse the column order of df2
-    df2 = df2[["FullName", "Handicap"]]
+    df2 = df2[["Cognome", "Nome", "Handicap"]]
     
     # Save DataFrame to CSV and show it on screen
     df2.to_csv("triesteHCP.csv", index=False)
