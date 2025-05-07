@@ -42,6 +42,7 @@ def convert_display_save(df):
         mime="text/csv"
         )
     # Display the updated DataFrame
+    # --------------------------------  GRAPH 1 --------------------------------
     # Remove rows where Handicap >= 54
     df2 = df2[df2["Handicap"] < 54]
     
@@ -62,6 +63,32 @@ def convert_display_save(df):
     plt.xlabel('Handicap')
     plt.ylabel('Density')
     plt.title('Golf Club Handicap distribution (only players with HCP <54)')
+    plt.legend()
+    
+    # Display the plot in Streamlit
+    st.pyplot(plt)
+
+    # ------------------------------    GRAPH 2 -------------------
+    # Remove rows where Handicap >= 54
+    df3 = df2[df2["Handicap"] < 36]
+    
+    # Plot histogram of "Handicap" values
+    plt.figure(figsize=(10, 6)) 
+    count, bins, ignored = plt.hist(df3["Handicap"], bins=10, density=True, alpha=0.6, color='skyblue', edgecolor='black')
+    
+    # Fit a normal distribution to the data
+    mean, std_dev = norm.fit(df3["Handicap"])
+    
+    # Plot the Gaussian fit
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = norm.pdf(x, mean, std_dev)
+    plt.plot(x, p, 'k', linewidth=2, label=f'Gaussian fit\nMean: {mean:.2f}, Std Dev: {std_dev:.2f}')
+    
+    # Add labels and title
+    plt.xlabel('Handicap')
+    plt.ylabel('Density')
+    plt.title('Golf Club Handicap distribution (only players with HCP <36)')
     plt.legend()
     
     # Display the plot in Streamlit
