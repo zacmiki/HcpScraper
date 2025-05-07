@@ -70,7 +70,7 @@ def convert_display_save(df):
 
     # ------------------------------    GRAPH 2 -------------------
     # Remove rows where Handicap >= 54
-    df3 = df2[df2["Handicap"] < 36]
+    df3 = df2[df2["Handicap"] <= 36.0]
     
     # Plot histogram of "Handicap" values
     plt.figure(figsize=(10, 6)) 
