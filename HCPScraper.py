@@ -131,6 +131,61 @@ if st.button("Start Scraping"):
             else:
                 page.goto(secondurl)
 
+    
+                # ------------------------- New Code 13 August 2025 ----------------
+                # Scrape left pages (1–10)
+                for i in range(1, 11):
+                    if i > 1:
+                        # snapshot current table HTML
+                        initial_content = page.inner_html('#cpCorpo_gv_Handicap')
+                        # click the pager *link* for page i (not cells)
+                        pager_link = page.locator("#cpCorpo_gv_Handicap").get_by_role("link", name=str(i))
+                        if pager_link.count() > 0:
+                            pager_link.first.click()
+                            page.wait_for_function(
+                                "([sel, html]) => document.querySelector(sel).innerHTML !== html",
+                                arg=["#cpCorpo_gv_Handicap", initial_content]
+                            )
+                        # If there's no link (already on that page), do nothing.
+                
+                    html2 = page.inner_html('#cpCorpo_gv_Handicap')
+                    table = BeautifulSoup(html2, "html.parser")
+                    column_data = table.find_all("tr")
+                    for row in column_data[1:]:
+                        row_data = row.find_all("td")
+                        individual_row_data = [data.text.strip() for data in row_data]
+                        if len(individual_row_data) == len(df.columns):
+                            df.loc[len(df)] = individual_row_data
+                
+                st.subheader("First 200 Golfers Scraped ...")
+                
+                # Scrape right pages (1–7)
+                for i in range(1, 8):
+                    if i > 1:
+                        # snapshot current table HTML (right grid)
+                        initial_content_nz = page.inner_html('#cpCorpo_gv_HandicapNZ')
+                        # click the pager *link* for page i (not cells)
+                        pager_link_nz = page.locator("#cpCorpo_gv_HandicapNZ").get_by_role("link", name=str(i))
+                        if pager_link_nz.count() > 0:
+                            pager_link_nz.first.click()
+                            page.wait_for_function(
+                                "([sel, html]) => document.querySelector(sel).innerHTML !== html",
+                                arg=["#cpCorpo_gv_HandicapNZ", initial_content_nz]
+                            )
+                
+                    html3 = page.inner_html('#cpCorpo_gv_HandicapNZ')
+                    table = BeautifulSoup(html3, "html.parser")
+                    column_data = table.find_all("tr")
+                    for row in column_data[1:]:
+                        row_data = row.find_all("td")
+                        individual_row_data = [data.text.strip() for data in row_data]
+                        if len(individual_row_data) == len(df.columns):
+                            df.loc[len(df)] = individual_row_data
+                
+    
+                # ---------------------end of new code
+                # it was like this before changing the code 
+                '''
                 # Scrape left pages (1-10)
                 for i in range(1, 11):
                     if i > 1:  # Navigate for pages 2-10
@@ -154,6 +209,8 @@ if st.button("Start Scraping"):
                         individual_row_data = [data.text.strip() for data in row_data]
                         if len(individual_row_data) == len(df.columns):
                             df.loc[len(df)] = individual_row_data
+                '''
+                # -----
 
                 st.subheader("First 200 Golfers Scraped ...")
 
