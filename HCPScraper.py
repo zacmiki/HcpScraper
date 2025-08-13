@@ -182,60 +182,6 @@ if st.button("Start Scraping"):
                         if len(individual_row_data) == len(df.columns):
                             df.loc[len(df)] = individual_row_data
                 
-    
-                # ---------------------end of new code
-                # it was like this before changing the code 
-                '''
-                # Scrape left pages (1-10)
-                for i in range(1, 11):
-                    if i > 1:  # Navigate for pages 2-10
-                        # Get initial table content
-                        initial_content = page.inner_html('#cpCorpo_gv_Handicap')
-                        
-                        # Now i click to get the new page
-                        page.locator("#cpCorpo_gv_Handicap").get_by_role("cell", name=str(i), exact=True).click()
-                        # now I wait till the content changes
-                        page.wait_for_function(f'document.querySelector("#cpCorpo_gv_Handicap").innerHTML != `{initial_content}`')
-                        
-                        #page.wait_for_selector('#cpCorpo_gv_Handicap')
-                        #page.wait_for_selector('#cpCorpo_gv_HandicapNZ')
-                        
-                    html2 = page.inner_html('#cpCorpo_gv_Handicap')
-                    table = BeautifulSoup(html2, "html.parser")
-                    column_data = table.find_all("tr")
-
-                    for row in column_data[1:]:
-                        row_data = row.find_all("td")
-                        individual_row_data = [data.text.strip() for data in row_data]
-                        if len(individual_row_data) == len(df.columns):
-                            df.loc[len(df)] = individual_row_data
-                '''
-                # -----
-
-                st.subheader("First 200 Golfers Scraped ...")
-
-                # Scrape right pages (1-7)
-                for i in range(1, 8):
-                    if i > 1:  # Navigate for pages 2-7
-                        # Now i get the new pages from 2 ... from the right part of the page
-                        page.locator("#cpCorpo_gv_HandicapNZ").get_by_role("cell", name=str(i), exact=True).click()
-
-                        # now I wait till the content changes
-                        page.wait_for_function(f'document.querySelector("#cpCorpo_gv_HandicapNZ").innerHTML != `{initial_content}`')
-                        
-                        #page.wait_for_selector('#cpCorpo_gv_HandicapNZ')
-                        #page.wait_for_selector('#cpCorpo_gv_Handicap')
-                    
-                    html3 = page.inner_html('#cpCorpo_gv_HandicapNZ')
-                    table = BeautifulSoup(html3, "html.parser")
-                    column_data = table.find_all("tr")
-
-                    for row in column_data[1:]:
-                        row_data = row.find_all("td")
-                        individual_row_data = [data.text.strip() for data in row_data]
-                        if len(individual_row_data) == len(df.columns):
-                            df.loc[len(df)] = individual_row_data
-
                 # Close the browser
                 browser.close()
                 convert_display_save(df)
