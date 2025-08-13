@@ -1,4 +1,4 @@
-# existing packages you already have (keep these)
+
 libnss3
 libnspr4
 libatk1.0-0
@@ -22,7 +22,7 @@ libcairo-gobject2
 libgdk-pixbuf-2.0-0
 libx11-xcb1
 
-# additions to satisfy Playwright/browser deps
+
 libxslt1.1
 libwoff2dec0
 libevent-2.1-7
